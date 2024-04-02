@@ -1,0 +1,20 @@
+#!/usr/bin/env bash                                                                                                                                                                 
+i=1
+while read line; do
+((i++))
+varname="var$i"
+printf -v $varname "$line"
+done < sample_list1.txt
+for j in `seq 2 $i`; do
+curr_var=var$j
+eval curr_var=\$$curr_var
+if [ "$curr_var" != "" ]; then
+id_name=`echo $curr_var | awk 'END {print $1}'`
+#extract MHC region reads
+
+#time /users/gshankar/tools/FastQC/fastqc  /dcs04/mathias/data/CAAPA2_Transcriptomics/2102UNHS-0288/${id_name}/${id_name}_1.fastq.gz -o /dcs04/mathias/data/CAAPA2_Transcriptomics/fastQC_reports/
+time /users/gshankar/tools/FastQC/fastqc  /dcs04/mathias/data/CAAPA2_Transcriptomics/2102UNHS-0288/${id_name}/${id_name}_2.fastq.gz -o /dcs04/mathias/data/CAAPA2_Transcriptomics/fastQC_reports/
+echo $?
+sleep 1 # pause                                                                                                                                                             
+fi
+done
