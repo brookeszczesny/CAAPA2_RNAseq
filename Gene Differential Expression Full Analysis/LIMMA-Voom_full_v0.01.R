@@ -13,21 +13,10 @@ library(stringr)
 
 # Active asthma Case Definition used
 subset_name <- "full_n536_"
-#subset_name <- "Adult_n376_"
-#subset_name<- "Ped_n160_"
 
-#subset_name <- "Nigeria_n66_"
-#subset_name <- "Baltimore_n76_"
-#subset_name <- "Barbados_n81_"
-#subset_name <- "Brazil_n80_"
-#subset_name <- "Chicago_n84_"
-#subset_name <- "Denver_n87_"
-#subset_name <-"Washington_DC_n62_"
 
-output_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/full/"
-#output_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/adult_vs_ped/adult/"
-#output_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/adult_vs_ped/ped/"
-#output_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/"
+output_path <- "/data/home/szczesnybm/CAAPA2_differential_expr_test/"
+
 
 setwd(output_path)
 sink(paste(c(output_path,subset_name,"LIMMA-voom_Out.txt"),collapse=""))
@@ -36,35 +25,13 @@ sink(paste(c(output_path,subset_name,"LIMMA-voom_Out.txt"),collapse=""))
 by_site <- FALSE
 #by_site <- TRUE
 
-pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_full_n536_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Adult_n376_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Ped_n160_withPC.csv"
+pheno_withPC_path <-"/data/lad_gphs/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_full_n536_withPC.csv"
 
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Nigeria_n66_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Baltimore_n76_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Barbados_n81_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Brazil_n80_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Chicago_n84_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Denver_n87_withPC.csv"
-#pheno_withPC_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_Washington_DC_n62_withPC.csv"
 
 # Active asthma
-raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/full/full_n536__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/adult_vs_ped/adult/Adult_n376__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/adult_vs_ped/ped/Ped_n160__raw_counts.csv"
+raw_counts_path <-"/data/lad_gphs/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/full/full_n536__raw_counts.csv"
 
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/Nigeria_n66__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/Baltimore_n76__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/Barbados_n81__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/Brazil_n80__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/Chicago_n84__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/Denver_n87__raw_counts.csv"
-#raw_counts_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/by_site/Washingtond_DC_n62__raw_counts.csv"
-
-passed_genes_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/full/full_n536__21831_filtered_genes.csv"
-#passed_genes_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/adult_vs_ped/adult/Adult_n376__21789_filtered_genes.csv"
-#passed_genes_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/adult_vs_ped/ped/Ped_n160__21887_filtered_genes.csv"
-
+passed_genes_path <- "/data/lad_gphs/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/full/full_n536__21831_filtered_genes.csv"
 
 #-------------------------------------------------------------------------------------------------------
 
