@@ -108,7 +108,7 @@ fit <- lmFit(v, mod1);
 fit.eb <- eBayes(fit)
 res <- topTable(fit.eb, coef="colData$asthmaCaseControl2",confint=TRUE,number=Inf)
 
-save(fit.eb, res, file="LIMMA-voom_out.rda")
+save(fit.eb, res,svseq, file="LIMMA-voom_out.rda")
 
 res$SE <- res$logFC/res$t # std error = effect size / t-stat
 
@@ -139,40 +139,5 @@ pvalue_label,SE_label, qvalue_label)
 results_name <- paste(c(output_path,subset_name,"_", n_passing_filtered_genes,"_results.csv"),collapse="")
 write.table(res,results_name,sep=",",row.names=F,quote=F)
 
-#### QQ plot
-library(ggplot2)
-library(RVA)
-
-voom<-read.csv(results_name,row.names=1,header=T)
-png(filename=paste(c(output_path,subset_name,"_", n_passing_filtered_genes,"_qqplot.png"),collapse=""),width = 768, height = 768)
-p0 <- plot_qq(data=voom,p.value.flag=pvalue_label,ci=0.95) + theme_bw(base_size = 24)+annotate(
-     geom = "text",
-     x = -Inf,
-     y = Inf,
-     hjust = -0.15,
-     vjust = 1 + 0.15 * 3,
-     label = sprintf("λ = %.4f",median(qchisq(1-voom[[pvalue_label]],1), na.rm=T) / qchisq(0.5,1)),
-     size = 12
-   )
-p0 
-dev.off()
-
-### p-value histogram
-png(filename=paste(c(output_path,subset_name,"_",n_passing_filtered_genes,"_pvalue_hist.png"),collapse=""),width = 768, height = 768)
-p1<-hist(voom[[pvalue_label]],xlab="P-Value",cex.axis=1.5,cex.lab=1.5,main="")
-dev.off()
-
-
-### volcano plot
-# color genes with qvalue < 0.05 by #sites with pvalue < 0.05
-png(filename=paste(c(output_path,subset_name,"_",n_passing_filtered_genes,"_volcano_plot.png"),collapse=""),width = 768, height = 768)
-p2<-plot(res[[log2FC_label]],-log10(res[[pvalue_label]]),main=paste(c(subset_name,"Volcano Plot"),collapse=" "),xlab="log2FC",ylab="-log10(P-Value)", col = ifelse(res[[qvalue_label]]<0.05,'red','black'), pch = 20 )
-p2+ legend(x="topright",legend=c("q-value < 0.05","q-value >= 0.05"), fill=c("red", "black"))
-dev.off()
-
-
 
 sessionInfo()
-savehistory(file=paste(c(output_path,subset_name,"LIMMA-voom.Rhistory"),collapse=""))
-#sink()
-closeAllConnections()
