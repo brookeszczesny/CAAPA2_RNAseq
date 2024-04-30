@@ -12,16 +12,16 @@ options(stringsAsFactors = FALSE);
 
 normalized_counts_path <- "/data/home/szczesnybm/CAAPA2_differential_expr_test/full_n536__21831_voom_norm_counts.csv"
 pheno_path <- "/data/lad_gphs/CAAPA2_Transcriptomics_analysis/phenotype_data/27APR2022/asthma_active/pheno_full_n536_withPC.csv"
-DE_results_path <- "/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/summary/combined_results.csv"
+DE_results_path <- "/data/lad_gphs/CAAPA2_Transcriptomics_analysis/differential_expression_analysis/05MAY2022/active_asthma/summary/combined_results.csv"
 
 voom_counts_path <- "/data/home/szczesnybm/CAAPA2_differential_expr_test/full_n536__21831_voom_norm_counts.csv"
 
 
-output_path <-"/dcs04/mathias/data/CAAPA2_Transcriptomics_analysis/WGCNA/14AUG2022/run4/"
+output_path <-"/data/home/szczesnybm/CAAPA2_WGCNA_test/"
 
 setwd(output_path)
 
-subset_name <- "Run4"
+subset_name <- "WGCNA_test"
 
 #parameters
 FDR_threshold <- 0.15 #cuttoff to filter into WGCNA
